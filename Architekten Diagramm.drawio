@@ -1,0 +1,56 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36" version="29.1.1">
+  <diagram name="Seite-1" id="q4R-vl86ECxsqWE3G7aA">
+    <mxGraphModel dx="655" dy="1653" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="lVu0INwNYlKxOUB-BXO_-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;Architecture Diagram&lt;/font&gt;" vertex="1">
+          <mxGeometry height="140" width="365" x="210" y="-1169" as="geometry" />
+        </mxCell>
+        <mxCell id="lVu0INwNYlKxOUB-BXO_-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div style=&quot;line-height: 150%;&quot;&gt;&lt;u style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font style=&quot;font-size: 14px; line-height: 150%;&quot;&gt;GUI (JavaFX)&lt;/font&gt;&lt;/u&gt;&lt;br&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Visualizes the simulation&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Takes User Input&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="159" width="160" x="80" y="-1054.75" as="geometry" />
+        </mxCell>
+        <mxCell id="lVu0INwNYlKxOUB-BXO_-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;u&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;OOP Wrapper&lt;/font&gt;&lt;/u&gt;&lt;div&gt;Controls the Simulation&lt;br/&gt;Wraps TraaS into object-oriented structures&lt;/div&gt;" vertex="1">
+          <mxGeometry height="129.5" width="207.5" x="482.5" y="-1040" as="geometry" />
+        </mxCell>
+        <mxCell id="lVu0INwNYlKxOUB-BXO_-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;u&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;SUMO&lt;/font&gt;&lt;/u&gt;&lt;div&gt;&lt;div&gt;Simulates the Traffic&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Executes the&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Commands&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="101" width="160" x="80" y="-759.75" as="geometry" />
+        </mxCell>
+        <mxCell id="lVu0INwNYlKxOUB-BXO_-15" edge="1" parent="1" source="lVu0INwNYlKxOUB-BXO_-10" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;width=13;startSize=9.05;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endWidth=21;endSize=9.05;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="lVu0INwNYlKxOUB-BXO_-11" value="">
+          <mxGeometry height="100" relative="1" width="100" as="geometry">
+            <Array as="points" />
+            <mxPoint x="810" y="-1019.01" as="sourcePoint" />
+            <mxPoint x="930" y="-1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lVu0INwNYlKxOUB-BXO_-16" edge="1" parent="1" source="lVu0INwNYlKxOUB-BXO_-5" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;startWidth=20;startSize=6.5;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="lVu0INwNYlKxOUB-BXO_-9" value="">
+          <mxGeometry height="100" relative="1" width="100" as="geometry">
+            <mxPoint x="250" y="-970" as="sourcePoint" />
+            <mxPoint x="510" y="-960" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="aIRviMVFu-tRhpvFPeow-3" edge="1" parent="1" source="lVu0INwNYlKxOUB-BXO_-9" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;width=13;startSize=9.05;exitX=0.533;exitY=1.019;exitDx=0;exitDy=0;endWidth=21;endSize=9.05;exitPerimeter=0;" target="lVu0INwNYlKxOUB-BXO_-10" value="">
+          <mxGeometry height="100" relative="1" width="100" as="geometry">
+            <mxPoint x="510" y="-1020" as="sourcePoint" />
+            <mxPoint x="600" y="-1021" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lVu0INwNYlKxOUB-BXO_-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;u&gt;&lt;font style=&quot;font-size: 13px;&quot;&gt;TraaS API&lt;/font&gt;&lt;/u&gt;&lt;div&gt;Translates between OOP Wrapper calls and SUMO’s TraCI commands&lt;/div&gt;" vertex="1">
+          <mxGeometry height="161.5" width="170" x="510" y="-790" as="geometry" />
+        </mxCell>
+        <mxCell id="IXu2aHuuDsL7g_qz3UyT-1" parent="1" style="text;strokeColor=none;fillColor=none;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Forwards user actions to the OOP Wrapper &lt;br&gt;Displays simulation data from the OOP Wrapper&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="230" x="240" y="-1029" as="geometry" />
+        </mxCell>
+        <mxCell id="IXu2aHuuDsL7g_qz3UyT-2" edge="1" parent="1" source="lVu0INwNYlKxOUB-BXO_-10" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;fontSize=12;startSize=8;endSize=8;" target="lVu0INwNYlKxOUB-BXO_-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IXu2aHuuDsL7g_qz3UyT-4" parent="1" style="text;strokeColor=none;fillColor=none;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" value="&lt;div&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;SUMO Sends Simulation Data&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;SUMO Receives Commands from TraaS API&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;TraaS connects to SUMO via TCP&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="230" x="270" y="-780" as="geometry" />
+        </mxCell>
+        <mxCell id="IXu2aHuuDsL7g_qz3UyT-5" parent="1" style="text;strokeColor=none;fillColor=none;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Returns simulation data to the OOP Wrapper&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Sends commands to TraaS&amp;nbsp;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="130" x="610" y="-870" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
