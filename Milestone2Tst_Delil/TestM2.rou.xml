@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-12-13T12:42:20.492463+01:00 by Eclipse SUMO netedit 1.25.0
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- VTypes -->
+    <vType id="t_1" vClass="pedestrian"/>
+    <vType id="t_2" vClass="bus"/>
+    <vType id="t_3" vClass="motorcycle"/>
+    <vType id="t_4" vClass="bicycle"/>
+    <vType id="t_5" vClass="passenger"/>
+    <!-- Routes -->
+    <route id="r_0" edges="E23 -E24 -E21 -E1 E16 E3 -E49 -E45 -E42 -E2 E14 E0 -E10 E11 -E28 -E27 E24 -E23" color="yellow"/>
+    <route id="r_1" edges="E12 E22 -E4 -E8 -E0 E13 E1 E21 E27 E28 E9 -E20 -E1 E16 E3 -E49 -E45 -E42 E41" color="yellow"/>
+    <route id="r_2" edges="E26 -E24 -E21 E20 E25 E10 E8 -E41 -E2 E14 E13 E1 E21 E27 E28 E9 -E20 E21 E24 -E23" color="yellow"/>
+    <route id="r_3" edges="-E12 -E25 -E20 -E1 E16 E15 E2 E41 E4 -E22 -E12 E10 E8 -E41 E42 E45 E49" color="yellow"/>
+    <route id="r_4" edges="-E3 E15 E14 E0 E8 -E41 E42 E45 E49" color="yellow"/>
+    <route id="r_5" edges="E21" color="yellow"/>
+</routes>
