@@ -1,17 +1,17 @@
-package trafficparticipants;
-
+import de.tudresden.sumo.cmd.Simulation;
 import it.polito.appeal.traci.SumoTraciConnection;
 import de.tudresden.sumo.cmd.Vehicle;
 
 public class VehicleModul {
 
 
-    protected double speed;
     protected String id;
     protected String type;
+    protected String routeID;
+    protected int depart;
     protected double position;
-    protected String lane;
-    protected String routeId;
+    protected double speed;
+    protected byte departLane;
 
 
 
@@ -19,9 +19,11 @@ public class VehicleModul {
         this.id = id;
         this.speed = 0.0;
         this.position = 0.0;
-        this.lane = "";
+        this.routeID = "";
+        this.depart = 0;
+        this.departLane = 0;
         this.type = "";
-        this.routeId = "";
+
     }
 
     public double getSpeed() {
@@ -40,22 +42,32 @@ public class VehicleModul {
         this.position = position;
     }
 
+
 public void updateFromSumo(SumoTraciConnection conn) throws Exception {
-    this.speed = (double) conn.do_job_get(
-            Vehicle.getSpeed(this.id)
-    );
-    this.position = (double) conn.do_job_get(
-            Vehicle.getPosition(this.id)
-    );
-    this.lane = (String) conn.do_job_get(
+    synchronized (LOCK.CONN_LOCK)
+    {
+        this.speed = (double) conn.do_job_get(
+                Vehicle.getSpeed(this.id)
+        );
+    }
+    synchronized (LOCK.CONN_LOCK)
+    {
+        this.position = (double) conn.do_job_get(
+                Vehicle.getPosition(this.id)
+        );
+    }
+    /*this.lane = (String) conn.do_job_get(
             Vehicle.getLaneID(this.id)
-    );
+    );*/
 }
 public void setSpeedINSumo(SumoTraciConnection conn, double newSpeed) throws Exception{
     this.speed = newSpeed;
+    synchronized (LOCK.CONN_LOCK)
+    {
     conn.do_job_set(
             Vehicle.setSpeed(this.id, newSpeed)
     );
+    }
     }
 
 }
