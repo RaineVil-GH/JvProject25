@@ -35,7 +35,7 @@ public class Main {
         {
             for (int j = 0; j < TrafficLightsIds.size(); j++) {
                 String s = TrafficLightsIds.get(j);
-                System.out.println(Trafficlight.getRedYellowGreenState(s));
+                System.out.println("Trafficlight " + (j+1) + ": " + conn.do_job_get((Trafficlight.getRedYellowGreenState(s));
             }
             conn.do_timestep();
             System.out.println("Step: " + (i+1));
