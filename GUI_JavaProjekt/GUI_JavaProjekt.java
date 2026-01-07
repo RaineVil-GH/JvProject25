@@ -77,7 +77,76 @@ public class GUI_JavaProjekt
         //Stop
         JButton stop = new JButton("Stop");  
         ctrP.add(stop);
-		stop.addActionListener(e -> simTimer.stop());        
+		stop.addActionListener(e -> simTimer.stop());
+
+		 JButton vehtype = new JButton("Filter");
+            ctrP.add(vehtype);
+
+            vehtype.addActionListener(e -> {
+                JFrame vFrm = new JFrame("Choose Vehicle Type");
+                vFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                //JToggleButton car = new JToggleButton("Car");
+                //JButton car1 = new JButton("Car");
+                JCheckBox car = new JCheckBox("Car");
+                JCheckBox bus = new JCheckBox("Bus");
+                JCheckBox motorcycle = new JCheckBox("Motorcycle");
+                JCheckBox pedestrian = new JCheckBox("Pedestrian");
+                JCheckBox cyclist = new JCheckBox("Cyclist");
+                JCheckBox allV = new JCheckBox("All Vehicles");
+
+                Font sizeFont = new Font("Dialog", Font.PLAIN, 20);
+
+                car.setFont(sizeFont);
+                bus.setFont(sizeFont);
+                motorcycle.setFont(sizeFont);
+                pedestrian.setFont(sizeFont);
+                cyclist.setFont(sizeFont);
+                allV.setFont(sizeFont);
+
+                var distance = BorderFactory.createEmptyBorder(10, 20, 10, 20);
+
+                car.setBorder(distance);
+                bus.setBorder(distance);
+                motorcycle.setBorder(distance);
+                pedestrian.setBorder(distance);
+                cyclist.setBorder(distance);
+                allV.setBorder(distance);
+
+
+                car.setSelected(true);
+                bus.setSelected(true);
+                motorcycle.setSelected(true);
+                pedestrian.setSelected(true);
+                cyclist.setSelected(true);
+                allV.setSelected(true);
+
+
+
+                JPanel panel = new JPanel();
+                panel.setLayout(new java.awt.GridLayout(6, 1, 10, 10));
+
+                panel.add(car);
+                panel.add(bus);
+                panel.add(motorcycle);
+                panel.add(pedestrian);
+                panel.add(cyclist);
+                panel.add(allV);
+
+                vFrm.setContentPane(panel);
+                vFrm.setSize(500, 300);
+                vFrm.setVisible(true);
+
+
+                car.addActionListener(f -> {
+                    if(mv == null) return;
+
+                    //	Edges edg = mv.getEdges().get(0);
+                    //	vMngr.spawnVehicle(1, conn, 'C');
+                    //smV.repaint();
+                    });
+
+                });
+
 
         
         JMenuBar menuBar = new JMenuBar();
@@ -121,3 +190,4 @@ public class GUI_JavaProjekt
 	}
 
 }
+
