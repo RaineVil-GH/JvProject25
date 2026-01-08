@@ -1,10 +1,11 @@
-
+package src;
 import de.tudresden.sumo.cmd.Vehicle;
 import it.polito.appeal.traci.SumoTraciConnection;
 import de.tudresden.sumo.cmd.Trafficlight;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
+import src.GUI_Java.GuiSumoBridge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +14,22 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         String SUMO_BIN = "C:\\Program Files (x86)\\Eclipse\\Sumo\\bin\\sumo-gui.exe";
-        String SUMO_CFG = "C:\\Users\\delil\\Java_SUMO_Projekt_Final\\TestM2.sumocfg";
+        String SUMO_CFG = "C:\\Users\\Gulo3\\Desktop\\Melih_Kocatuerk\\Java_SUMO_Projekt\\TestM2.sumocfg";
 
         SumoTraciConnection conn = new SumoTraciConnection(SUMO_BIN, SUMO_CFG);
+        conn.addOption("start", "true");
+
         conn.runServer();
 
+        //Starting the GUI and the Visualisation
+
+
         List<String> TrafficLightsIds = (List<String>) conn.do_job_get(Trafficlight.getIDList());
-        System.out.println(TrafficLightsIds + "\nTrafficLights: " + TrafficLightsIds.size());
+        System.out.println( TrafficLightsIds + "\nTrafficLights: " + TrafficLightsIds.size());
 
+        new GuiSumoBridge(conn, TrafficLightsIds).startGui();
 
+/*
         Car c1 = new Car("c");
         c1.createCar(10, conn);
 
@@ -36,6 +44,8 @@ public class Main {
 
         Bus b1 = new Bus("b");
         b1.createBus(10, conn);
+*/
+
 
 
         List<TrafficlightModul> trafficlights = new ArrayList<>();
@@ -46,19 +56,14 @@ public class Main {
         trafficlights.get(0).setMultiPhase(conn,"GGGGGGGGGGGG");
         
         //Starting the GUI and the Visualisation
-		new GuiSumoBridge().startGui();
+		//new GuiSumoBridge().startGui();
         
-        Steps s1 = new Steps(conn, TrafficLightsIds);
-        s1.StepCounter();
+
        
         //Simulating the trafficlights and cars
-        new GuiSumoBridge().ongoingGui();
-        
-        synchronized (LOCK.CONN_LOCK) {
-            List<String> CarIds = (List<String>) conn.do_job_get(Vehicle.getIDList());
-            System.out.println(CarIds + "\nVehicles: " + CarIds.size());
+        new GuiSumoBridge(conn, TrafficLightsIds).ongoingGui();
 
-        }
+
 			
     }
 }
