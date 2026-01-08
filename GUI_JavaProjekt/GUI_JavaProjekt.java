@@ -85,8 +85,6 @@ public class GUI_JavaProjekt
             vehtype.addActionListener(e -> {
                 JFrame vFrm = new JFrame("Choose Vehicle Type");
                 vFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                //JToggleButton car = new JToggleButton("Car");
-                //JButton car1 = new JButton("Car");
                 JCheckBox car = new JCheckBox("Car");
                 JCheckBox bus = new JCheckBox("Bus");
                 JCheckBox motorcycle = new JCheckBox("Motorcycle");
@@ -265,5 +263,6 @@ public class GUI_JavaProjekt
 	}
 
 }
+
 
 
