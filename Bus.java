@@ -1,3 +1,4 @@
+package src;
 import de.tudresden.sumo.cmd.Simulation;
 import it.polito.appeal.traci.SumoTraciConnection;
 import de.tudresden.sumo.cmd.Vehicle;
@@ -17,9 +18,15 @@ public class Bus extends VehicleModul {
     }
 
     int count = 0;
-    public void createBus(int amount, SumoTraciConnection conn) throws Exception {
+
+    public void createBus(int amount, SumoTraciConnection conn) throws Exception
+    {
+        createBus(amount, conn, -1);
+    }
+
+    public void createBus(int amount, SumoTraciConnection conn, int STD_ID) throws Exception {
         for(int i = 0; i < amount; i++) {
-            String id2 = "Bus" + count;
+            String id2 = STD_ID + "Bus" + count;
             count++;
             Bus b = new Bus(id2);
 
@@ -27,19 +34,6 @@ public class Bus extends VehicleModul {
                 conn.do_job_set(Vehicle.add(b.id, b.type, b.routeID, b.depart, b.position, b.speed, b.departLane));
             }
         }
-    }
-
-    public void setBusSpeedLow(SumoTraciConnection conn) throws Exception {
-        setSpeedINSumo(conn, 30);
-    }
-
-    public void setBusSpeedMedium(SumoTraciConnection conn) throws Exception {
-        setSpeedINSumo(conn, 100);
-    }
-
-
-    public void setBusSpeedHigh(SumoTraciConnection conn) throws Exception {
-        setSpeedINSumo(conn, 150);
     }
 
 
