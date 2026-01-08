@@ -1,3 +1,4 @@
+package src;
 import de.tudresden.sumo.cmd.Simulation;
 import de.tudresden.sumo.cmd.Vehicle;
 import it.polito.appeal.traci.SumoTraciConnection;
@@ -17,9 +18,15 @@ public class Pedestrian extends VehicleModul {
     }
 
     int count = 0;
-    public void createPedestrian(int amount, SumoTraciConnection conn) throws Exception {
+
+    public void createPedestrian(int amount, SumoTraciConnection conn) throws Exception
+    {
+        createPedestrian(amount, conn, -1);
+    }
+
+    public void createPedestrian(int amount, SumoTraciConnection conn, int STD_ID) throws Exception {
         for(int i = 0; i < amount; i++) {
-            String id2 = "Pedestrian" + count;
+            String id2 = STD_ID + "Pedestrian" + count;
             count++;
             Pedestrian p = new Pedestrian(id2);
             synchronized (LOCK.CONN_LOCK) {
@@ -27,8 +34,4 @@ public class Pedestrian extends VehicleModul {
             }
         }
     }
-
-/*public void setPedestrianSpeed(SumoTraciConnection conn) throws Exception{
-    setSpeedINSumo(conn, 2.5);
-    }*/
 }
