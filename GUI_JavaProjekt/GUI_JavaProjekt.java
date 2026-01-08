@@ -136,6 +136,81 @@ public class GUI_JavaProjekt
                 vFrm.setSize(500, 300);
                 vFrm.setVisible(true);
 
+				car.addActionListener(e1 -> {
+                    if(car.isSelected() == false) {
+                        allV.setSelected(false);
+                    }
+                });
+
+                bus.addActionListener(e1 -> {
+                    if(bus.isSelected() == false) {
+                        allV.setSelected(false);
+                    }
+                });
+
+                motorcycle.addActionListener(e1 -> {
+                    if(motorcycle.isSelected() == false) {
+                        allV.setSelected(false);
+                    }
+                });
+
+                pedestrian.addActionListener(e1 -> {
+                    if(pedestrian.isSelected() == false) {
+                        allV.setSelected(false);
+                    }
+                });
+
+                cyclist.addActionListener(e1 -> {
+                    if(cyclist.isSelected() == false) {
+                        allV.setSelected(false);
+                    }
+                });
+
+                car.addActionListener(e1 -> {
+                    if((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
+                        allV.setSelected(true);
+                    }
+                });
+
+                bus.addActionListener(e1 -> {
+                    if((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
+                        allV.setSelected(true);
+                    }
+                });
+
+                motorcycle.addActionListener(e1 -> {
+                    if((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
+                        allV.setSelected(true);
+                    }
+                });
+
+                pedestrian.addActionListener(e1 -> {
+                    if((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
+                        allV.setSelected(true);
+                    }
+                });
+
+                cyclist.addActionListener(e1 -> {
+                    if((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
+                        allV.setSelected(true);
+                    }
+                });
+
+                allV.addActionListener(e1 -> {
+                    if(allV.isSelected() == false) {
+                        car.setSelected(false);
+                        bus.setSelected(false);
+                        motorcycle.setSelected(false);
+                        pedestrian.setSelected(false);
+                        cyclist.setSelected(false);
+                    } else if (allV.isSelected() == true) {
+                        car.setSelected(true);
+                        bus.setSelected(true);
+                        motorcycle.setSelected(true);
+                        pedestrian.setSelected(true);
+                        cyclist.setSelected(true);
+                    }
+                });
 
                 car.addActionListener(f -> {
                     if(mv == null) return;
@@ -190,4 +265,5 @@ public class GUI_JavaProjekt
 	}
 
 }
+
 
