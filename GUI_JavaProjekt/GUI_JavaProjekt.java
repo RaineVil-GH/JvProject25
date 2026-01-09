@@ -64,13 +64,30 @@ public class GUI_JavaProjekt
         //Add Vehicle
         JButton veh = new JButton("Vehicles");
         ctrP.add(veh);
+		
         if(true) {
             veh.addActionListener(e -> {
                 JFrame vFrm = new JFrame("Choose Vehicle");
                 JButton car = new JButton("Add Car");
+				JButton bus = new JButton("Add Bus");
+                JButton motorcyclist = new JButton("Add Motorcyclist");
+                JButton cyclist = new JButton("Add Cyclist");
+                JButton pedestrian = new JButton("Add Pedestrian");
+				
                 vFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 vFrm.setSize(500, 300);
+
+				JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(2, 3, 10, 10));
+				
                 vFrm.add(car);
+				panel.add(bus);
+                panel.add(motorcyclist);
+                panel.add(cyclist);
+                panel.add(pedestrian);
+
+				vFrm.setContentPane(panel);
+                vFrm.setLocationRelativeTo(frame);
                 vFrm.setVisible(true);
 
 
@@ -354,3 +371,4 @@ public class GUI_JavaProjekt
 	}
 	
 }
+
