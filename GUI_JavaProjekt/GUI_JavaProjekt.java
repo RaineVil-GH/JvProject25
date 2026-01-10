@@ -24,10 +24,14 @@ public class GUI_JavaProjekt
 	public MapVisual mv;
 //	public SimuVisual smV;
 
-    public boolean play_stop = false;
+
     public boolean pressed;
     public SumoTraciConnection conn;
     public List<String> TrafficLightsIds;
+    public int ticks;
+
+
+    private Car cCar;
 
 	public GUI_JavaProjekt(SumoTraciConnection conn, List<String> trafficLightsIds) {
     this.conn = conn;
@@ -64,30 +68,13 @@ public class GUI_JavaProjekt
         //Add Vehicle
         JButton veh = new JButton("Vehicles");
         ctrP.add(veh);
-		
         if(true) {
             veh.addActionListener(e -> {
                 JFrame vFrm = new JFrame("Choose Vehicle");
                 JButton car = new JButton("Add Car");
-				JButton bus = new JButton("Add Bus");
-                JButton motorcyclist = new JButton("Add Motorcyclist");
-                JButton cyclist = new JButton("Add Cyclist");
-                JButton pedestrian = new JButton("Add Pedestrian");
-				
                 vFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 vFrm.setSize(500, 300);
-
-				JPanel panel = new JPanel();
-                panel.setLayout(new GridLayout(2, 3, 10, 10));
-				
                 vFrm.add(car);
-				panel.add(bus);
-                panel.add(motorcyclist);
-                panel.add(cyclist);
-                panel.add(pedestrian);
-
-				vFrm.setContentPane(panel);
-                vFrm.setLocationRelativeTo(frame);
                 vFrm.setVisible(true);
 
 
@@ -105,7 +92,7 @@ public class GUI_JavaProjekt
 
 
 
-        Steps s1 = new Steps(conn,TrafficLightsIds, true);
+        Steps s1 = new Steps(conn,TrafficLightsIds, true, 400);
         JButton start = new JButton("Start");
         ctrP.add(start);
 
@@ -327,14 +314,61 @@ public class GUI_JavaProjekt
 		fileMenu.addSeparator();
 		fileMenu.add(exitItem);
 		menuBar.add(fileMenu);
-		
+
+
 
 		//FileChooser
 		openItem.addActionListener(e -> openNtwrkFile());        
 	    exitItem.addActionListener(e -> System.exit(0));
 
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+
+
+        //Delay Slider
+
+        JPanel DelayPanel = new JPanel();
+        DelayPanel.setLayout(new BoxLayout(DelayPanel, BoxLayout.X_AXIS));
+
+
+
+        JSlider DelaySlider = new JSlider(0, 1000, 400);
+        JLabel ms = new JLabel("Delay(ms): ");
+
+        DelaySlider.setMaximumSize(new Dimension(300,50));
+        ticks = DelaySlider.getValue();
+        SpinnerNumberModel Anzeige = new SpinnerNumberModel(400, 0, 1000, 10);
+
+        JSpinner DelaySpinner = new JSpinner(Anzeige);
+        ((JSpinner.DefaultEditor) DelaySpinner.getEditor())
+                .getTextField().setColumns(4);
+
+
+        DelayPanel.add(Box.createHorizontalStrut(500));
+        DelayPanel.add(Box.createHorizontalGlue());
+        DelayPanel.add(ms);
+        DelayPanel.add(DelaySlider);
+        DelaySlider.addChangeListener(e -> {
+            DelaySpinner.setValue(DelaySlider.getValue());
+            ticks = DelaySlider.getValue();
+            s1.delay(ticks);
+
+        });
+        DelaySpinner.addChangeListener(e -> {
+            DelaySlider.setValue((int) DelaySpinner.getValue());
+            ticks = (int) DelaySpinner.getValue();
+            s1.delay(ticks);
+        });
+
+        DelayPanel.add(DelaySlider);
+        DelayPanel.add(DelaySpinner);
+        DelayPanel.add(Box.createHorizontalGlue());
+
+        DelayPanel.add(Box.createHorizontalStrut(200));
+        menuBar.add(DelayPanel);
+
+
+
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 		
 
 	}
@@ -361,7 +395,7 @@ public class GUI_JavaProjekt
 	}
 	
 	public void simulateMapVisual()
-	{		
+	{
 
 		//smV.repaint();
 	}	
@@ -371,4 +405,3 @@ public class GUI_JavaProjekt
 	}
 	
 }
-
