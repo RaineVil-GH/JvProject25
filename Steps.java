@@ -9,13 +9,14 @@ public class Steps {
     public SumoTraciConnection conn;
     public List<String> TrafficLightsIds;
     public Boolean play;
+    public int delay;
 
-
-    public Steps(SumoTraciConnection conn, List<String> trafficLightsIds, boolean play)
+    public Steps(SumoTraciConnection conn, List<String> trafficLightsIds, boolean play, int delay)
     {
         this.conn = conn;
         this.TrafficLightsIds = trafficLightsIds;
         this.play = play;
+        this.delay = delay;
 
     }
 
@@ -23,7 +24,7 @@ public class Steps {
     {
         play = ps;
     }
-
+    public void delay(int delayer){ delay = delayer;}
 
 
 
@@ -45,7 +46,7 @@ public class Steps {
                     }
 
 
-
+                    Thread.sleep(delay);
                     synchronized (LOCK.CONN_LOCK)
                     {
                         conn.do_timestep();
