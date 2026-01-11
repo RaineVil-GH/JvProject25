@@ -30,6 +30,12 @@ public class GUI_JavaProjekt
     public List<String> TrafficLightsIds;
     public int ticks;
 
+    public int Camount;
+    public int Mamount;
+    public int Bamount;
+    public int CCamount;
+    public int Pamount;
+
 
     private Car cCar;
 
@@ -39,7 +45,7 @@ public class GUI_JavaProjekt
 
 	}
 	
-	//StartingMethode for the GUI
+	//Starting Method for the GUI
 	public void startFrame() {
         frame = new JFrame("GUI Network");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -258,9 +264,9 @@ public class GUI_JavaProjekt
 
         ctrP.add(StressTestDefault);
 
-        StressTestDefault STD1 = new StressTestDefault(conn, 1000);
+        StressTestStarter STS1 = new StressTestStarter(conn);
         StressTestDefault.addActionListener(e -> {
-            STD1.StressTestDefaultStarter();
+            STS1.StressTestDefaultStarter(1000);
         });
 
 
@@ -274,36 +280,135 @@ public class GUI_JavaProjekt
         StressTestConfig.addActionListener(e -> {
 
             JFrame STC = new JFrame("Stress Test Menu");
-
             JButton Spawn = new JButton("Start spawning");
 
-            SpinnerNumberModel pfeil = new SpinnerNumberModel(100, 0, null, 10);
-            JSpinner Spinner = new JSpinner(pfeil);
-            ((JSpinner.DefaultEditor) Spinner.getEditor())
-                    .getTextField().setColumns(6);
 
-            JLabel aLabel = new JLabel("Amount: ");
 
-            JPanel row = new JPanel(new java.awt.FlowLayout(FlowLayout.LEFT));
-            row.add(aLabel);
-            row.add(Spinner);
+            JLabel CLabel = new JLabel("Amount of Cars: ");
+            JLabel MLabel = new JLabel("Amount of Motorcycles: ");
+            JLabel BLabel = new JLabel("Amount of Bus: ");
+            JLabel CCLabel = new JLabel("Amount of Cyclist: ");
+            JLabel PLabel = new JLabel("Amount of Pedestrian: ");
 
-            JPanel panel  =  new JPanel();
-            panel.setLayout(new javax.swing.BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.add(row);
-            panel.add(Spawn);
 
-            STC.setContentPane(panel);
+            CLabel.setMaximumSize(new Dimension(200,50));
+            MLabel.setMaximumSize(new Dimension(200,50));
+            BLabel.setMaximumSize(new Dimension(200,50));
+            CCLabel.setMaximumSize(new Dimension(200,50));
+            PLabel.setMaximumSize(new Dimension(200,50));
+
+
+            JPanel NameOptions  =  new JPanel();
+            NameOptions.setLayout(new javax.swing.BoxLayout(NameOptions, BoxLayout.Y_AXIS));
+
+
+            NameOptions.add(CLabel);
+            NameOptions.add(Box.createVerticalStrut(20));
+            NameOptions.add(MLabel);
+            NameOptions.add(Box.createVerticalStrut(20));
+            NameOptions.add(BLabel);
+            NameOptions.add(Box.createVerticalStrut(20));
+            NameOptions.add(CCLabel);
+            NameOptions.add(Box.createVerticalStrut(20));
+            NameOptions.add(PLabel);
+
+
+            JPanel SpinnerOptions  =  new JPanel();
+            SpinnerOptions.setLayout(new javax.swing.BoxLayout(SpinnerOptions, BoxLayout.Y_AXIS));
+
+            SpinnerNumberModel CSM = new SpinnerNumberModel(0, 0, null, 10);
+            JSpinner CarSpinner = new JSpinner(CSM);
+            ((JSpinner.DefaultEditor) CarSpinner.getEditor()).getTextField().setColumns(10);
+            CarSpinner.setMaximumSize(new Dimension(100,50));
+
+            SpinnerNumberModel MSM = new SpinnerNumberModel(0, 0, null, 10);
+            JSpinner MotorcycleSpinner = new JSpinner(MSM);
+            ((JSpinner.DefaultEditor) MotorcycleSpinner.getEditor()).getTextField().setColumns(10);
+            MotorcycleSpinner.setMaximumSize(new Dimension(100,50));
+
+            SpinnerNumberModel BSM = new SpinnerNumberModel(0, 0, null, 10);
+            JSpinner BusSpinner = new JSpinner(BSM);
+            ((JSpinner.DefaultEditor) BusSpinner.getEditor()).getTextField().setColumns(10);
+            BusSpinner.setMaximumSize(new Dimension(100,50));
+
+            SpinnerNumberModel CCSM = new SpinnerNumberModel(0, 0, null, 10);
+            JSpinner CyclistSpinner = new JSpinner(CCSM);
+            ((JSpinner.DefaultEditor) CyclistSpinner.getEditor()).getTextField().setColumns(10);
+            CyclistSpinner.setMaximumSize(new Dimension(100,50));
+
+            SpinnerNumberModel PSM = new SpinnerNumberModel(0, 0, null, 10);
+            JSpinner PedestrianSpinner = new JSpinner(PSM);
+            ((JSpinner.DefaultEditor) PedestrianSpinner.getEditor()).getTextField().setColumns(10);
+            PedestrianSpinner.setMaximumSize(new Dimension(100,50));
+
+            SpinnerOptions.add(CarSpinner);
+            SpinnerOptions.add(Box.createVerticalStrut(15));
+            SpinnerOptions.add(MotorcycleSpinner);
+            SpinnerOptions.add(Box.createVerticalStrut(15));
+            SpinnerOptions.add(BusSpinner);
+            SpinnerOptions.add(Box.createVerticalStrut(15));
+            SpinnerOptions.add(CyclistSpinner);
+            SpinnerOptions.add(Box.createVerticalStrut(15));
+            SpinnerOptions.add(PedestrianSpinner);
+
+
+            JPanel Megapanel = new JPanel(new FlowLayout());
+
+            Megapanel.add(Box.createVerticalGlue());
+            Megapanel.add(NameOptions);
+            Megapanel.add(Box.createHorizontalStrut(50));
+            Megapanel.add(SpinnerOptions);
+            Megapanel.add(Box.createVerticalGlue());
+
+
+            JPanel Center = new JPanel(new java.awt.GridBagLayout());
+            Center.add(Megapanel);
+
+            JPanel SpawnPanel = new JPanel();
+            SpawnPanel.setLayout(new javax.swing.BoxLayout(SpawnPanel, BoxLayout.Y_AXIS));
+
+            SpawnPanel.add(Center);
+            SpawnPanel.add(Spawn);
+
+
+            CarSpinner.addChangeListener(e1 -> {
+                Camount = (int) CarSpinner.getValue();
+            });
+
+            MotorcycleSpinner.addChangeListener(e1 -> {
+                Mamount = (int) MotorcycleSpinner.getValue();
+            });
+
+            BusSpinner.addChangeListener(e1 -> {
+                Bamount = (int) BusSpinner.getValue();
+            });
+
+            CyclistSpinner.addChangeListener(e1 -> {
+                CCamount = (int) CyclistSpinner.getValue();
+            });
+
+            PedestrianSpinner.addChangeListener(e1 -> {
+                Pamount = (int) PedestrianSpinner.getValue();;
+            });
+
+            StressTestStarter STS2 = new StressTestStarter(conn);
+            Spawn.addActionListener(ex -> {
+                STS2.StressTestConfigurationStarter(Camount, Mamount, Bamount, CCamount, Pamount);
+            });
+
+
+
+            STC.setContentPane(SpawnPanel);
             STC.pack();
             STC.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             STC.setLocationRelativeTo(null);
             STC.setVisible(true);
 
 
-            int amount = (int) Spinner.getValue();
+
         });
 
-        
+
         JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		//FileMenu
@@ -338,8 +443,7 @@ public class GUI_JavaProjekt
         SpinnerNumberModel Anzeige = new SpinnerNumberModel(400, 0, 1000, 10);
 
         JSpinner DelaySpinner = new JSpinner(Anzeige);
-        ((JSpinner.DefaultEditor) DelaySpinner.getEditor())
-                .getTextField().setColumns(4);
+        ((JSpinner.DefaultEditor) DelaySpinner.getEditor()).getTextField().setColumns(4);
 
 
         DelayPanel.add(Box.createHorizontalStrut(500));
