@@ -5,13 +5,7 @@ import it.polito.appeal.traci.SumoTraciConnection;
 public class StressTestStarter {
     public SumoTraciConnection conn;
 
-    /*
-    public int Camount;
-    public int Mamount;
-    public int Bamount;
-    public int CCamount;
-    public int Pamount;
-    */
+    
 
     public StressTestStarter(SumoTraciConnection conn )
     {
@@ -84,4 +78,5 @@ public class StressTestStarter {
         });
         T_STC.start();
     }
+
 }
