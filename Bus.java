@@ -17,24 +17,29 @@ public class Bus extends VehicleModul {
 
     }
 
-    int count = 0;
+    static int count = 0;
+    public void createBus(int amount, SumoTraciConnection conn, String route, String color) throws Exception {
+        Thread bus = new Thread(() -> {
+            try
+            {
+                for(int i = 0; i < amount; i++) {
+                    String id2 = "Bus" + count;
+                    count++;
+                    Bus b = new Bus(id2);
+                    b.routeID = route;
 
-    public void createBus(int amount, SumoTraciConnection conn) throws Exception
-    {
-        createBus(amount, conn, -1);
-    }
+                    synchronized (LOCK.CONN_LOCK) {
+                        conn.do_job_set(Vehicle.add(b.id, b.type, b.routeID, b.depart , b.position, b.speed, b.departLane));
+                        conn.do_job_set(Vehicle.setColor(b.id, VehicleModul.getColor(color)));
+                    }
+                }
 
-    public void createBus(int amount, SumoTraciConnection conn, int STD_ID) throws Exception {
-        for(int i = 0; i < amount; i++) {
-            String id2 = STD_ID + "Bus" + count;
-            count++;
-            Bus b = new Bus(id2);
-
-            synchronized (LOCK.CONN_LOCK) {
-                conn.do_job_set(Vehicle.add(b.id, b.type, b.routeID, b.depart, b.position, b.speed, b.departLane));
+            } catch  (Exception e) {
+                e.printStackTrace();
             }
-        }
-    }
 
+        });
+        bus.start();
+    }
 
 }
