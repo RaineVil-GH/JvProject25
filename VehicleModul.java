@@ -26,6 +26,9 @@ public class VehicleModul {
 
     }
 
+    public static String[] routes = {"r_0", "r_1", "r_2", "r_3"};
+    public static String[] color = {"Red", "Blue", "Green", "Yellow", "Purple"};
+
     public double getSpeed() {
         return speed;
     }
@@ -55,6 +58,24 @@ public void updateFromSumo(SumoTraciConnection conn) throws Exception {
         this.position = (double) conn.do_job_get(
                 Vehicle.getPosition(this.id)
         );
+    }
+
+    public static SumoColor getColor(String color) {
+        switch (color) {
+            case "Red":
+                return new SumoColor(255, 0, 0, 255);
+            case "Blue":
+                return new SumoColor(0, 0, 255, 255);
+            case "Green":
+                return new SumoColor(0, 255, 0, 255);
+            case "Yellow":
+                return new SumoColor(255, 255, 0, 255);
+            case "Purple":
+                return new SumoColor(128, 0, 128, 255);
+            default:
+                return new SumoColor(255, 255, 255, 255);
+        }
+
     }
     /*this.lane = (String) conn.do_job_get(
             Vehicle.getLaneID(this.id)
