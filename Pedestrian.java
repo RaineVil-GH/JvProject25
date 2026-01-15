@@ -10,28 +10,39 @@ public class Pedestrian extends VehicleModul {
     public Pedestrian(String id) {
         super(id);
         this.type = "t_1";
+        this.routeID = "r_5";
         this.speed = 1.0;
         this.depart = 0;
         this.position = 0.0;
         this.edge = "edge_start_ped";
-        this.departLane = (byte) 0;
+        this.departLane = (byte) 0; //0
     }
+    
+    static int count = 0;
+    public void createPedestrian(int amount, SumoTraciConnection conn, String route, String color) throws Exception {
+        Thread pedestrian = new Thread(() -> {
+            try {
+                for (int i = 0; i < amount; i++) {
+                    String id2 = "Pedestrian" + count;
+                    count++;
+                    Pedestrian p = new Pedestrian(id2);
+                    p.routeID = route;
 
-    int count = 0;
+                    synchronized (LOCK.CONN_LOCK) {
+                        conn.do_job_set(Vehicle.add(p.id, p.type, p.routeID, p.depart, p.position, p.speed, p.departLane));
+                        conn.do_job_set(Vehicle.setColor(p.id, VehicleModul.getColor(color)));
+                    }
+                }
 
-    public void createPedestrian(int amount, SumoTraciConnection conn) throws Exception
-    {
-        createPedestrian(amount, conn, -1);
-    }
-
-    public void createPedestrian(int amount, SumoTraciConnection conn, int STD_ID) throws Exception {
-        for(int i = 0; i < amount; i++) {
-            String id2 = STD_ID + "Pedestrian" + count;
-            count++;
-            Pedestrian p = new Pedestrian(id2);
-            synchronized (LOCK.CONN_LOCK) {
-                conn.do_job_set(Vehicle.add(p.id, p.type, p.routeID, p.depart, p.position, p.speed, p.departLane));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
+
+        });
+        pedestrian.start();
     }
+
+/*public void setPedestrianSpeed(SumoTraciConnection conn) throws Exception{
+    setSpeedINSumo(conn, 2.5);
+    }*/
 }
