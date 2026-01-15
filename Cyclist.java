@@ -12,25 +12,35 @@ public class Cyclist extends VehicleModul {
         this.speed = 5.0;
         this.depart = 0;
         this.position = 0.0;
-        this.departLane = (byte) 1;
+        this.departLane = (byte) -2; //1
 
     }
+    
+    static int count = 0;
+    public void createCyclist(int amount, SumoTraciConnection conn, String route, String color) throws Exception {
+        Thread cyclist = new Thread(() -> {
+            try {
+                for (int i = 0; i < amount; i++) {
+                    String id2 = "Cyclist" + count;
+                    count++;
+                    Cyclist c = new Cyclist(id2);
+                    c.routeID = route;
 
-    int count = 0;
+                    synchronized (LOCK.CONN_LOCK) {
+                        conn.do_job_set(Vehicle.add(c.id, c.type, c.routeID, c.depart, c.position, c.speed, c.departLane));
+                        conn.do_job_set(Vehicle.setColor(c.id, VehicleModul.getColor(color)));
+                    }
+                }
 
-    public void createCyclist(int amount, SumoTraciConnection conn) throws Exception
-    {
-        createCyclist(amount, conn, -1);
-    }
-
-    public void createCyclist(int amount, SumoTraciConnection conn, int STD_ID) throws Exception {
-        for(int i = 0; i < amount; i++) {
-            String id2 = STD_ID + "Cyclist" + count;
-            count++;
-            Cyclist cc = new Cyclist(id2);
-            synchronized (LOCK.CONN_LOCK) {
-                conn.do_job_set(Vehicle.add(cc.id, cc.type, cc.routeID, cc.depart , cc.position, cc.speed, cc.departLane));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
+
+        });
+        cyclist.start();
+    }
+
+    public void setCyclistSpeed(SumoTraciConnection conn) throws Exception{
+        setSpeedINSumo(conn, 5.0);
     }
 }
