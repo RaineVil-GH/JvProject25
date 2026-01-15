@@ -1,4 +1,6 @@
 package src.GUI_Java;
+import de.tudresden.sumo.cmd.Vehicle;
+import de.tudresden.sumo.objects.SumoColor;
 import it.polito.appeal.traci.SumoTraciConnection;
 import src.*;
 
@@ -9,6 +11,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.lang.String;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class GUI_JavaProjekt
@@ -16,6 +20,9 @@ public class GUI_JavaProjekt
 
 	private JFrame frame;
 	private JPanel center;
+
+	private  Map<String, SumoColor> vehicleColorBackup = new HashMap<>();
+
 	
 	private boolean fileLoaded = false;
 	int steps = 0;
@@ -36,12 +43,19 @@ public class GUI_JavaProjekt
     public int CCamount;
     public int Pamount;
 
+	private MapVisual mv;
+    private VehicleModul vm;
+	private SumoTraciConnection conn;
+	private Car cCar = new Car("Car");
+	private Bus bBus = new Bus("Bus");
+    private Motorcycle mMotorcycle = new Motorcycle("Motorcycle");
+    private Cyclist cCyclist = new Cyclist("Cyclist");
+    private Pedestrian pPedestrian = new Pedestrian("Pedestrian");
 
-    private Car cCar;
-
-	public GUI_JavaProjekt(SumoTraciConnection conn, List<String> trafficLightsIds) {
+	public GUI_JavaProjekt(SumoTraciConnection conn, List<String> trafficLightsIds, VehicleModul vm) {
     this.conn = conn;
     this.TrafficLightsIds = trafficLightsIds;
+	this.vm = vm;
 
 	}
 	
@@ -71,29 +85,113 @@ public class GUI_JavaProjekt
         ctrP.add(new JLabel("ControlPanel"),BorderLayout.NORTH);
 
         //ControlPanel
-        //Add Vehicle
-        JButton veh = new JButton("Vehicles");
-        ctrP.add(veh);
-        if(true) {
+
+		JButton veh = new JButton("Add Object");
+            ctrP.add(veh);
+
             veh.addActionListener(e -> {
                 JFrame vFrm = new JFrame("Choose Vehicle");
                 JButton car = new JButton("Add Car");
+                JButton bus = new JButton("Add Bus");
+                JButton motorcycle = new JButton("Add Motorcyclist");
+                JButton cyclist = new JButton("Add Cyclist");
+                JButton pedestrian = new JButton("Add Pedestrian");
+
+                JPanel route = new JPanel(new GridLayout(2,1,0,5));
+                route.setBorder(BorderFactory.createTitledBorder("Route & Color"));
+
+                JComboBox<String> selectroute = new JComboBox<>(VehicleModul.routes);
+                JComboBox<String> selectcolor = new JComboBox<>(VehicleModul.color);
+
+                route.add(selectroute);
+                route.add(selectcolor);
+
                 vFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 vFrm.setSize(500, 300);
-                vFrm.add(car);
+
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(2, 3, 10, 10));
+
+                panel.add(car);
+                panel.add(bus);
+                panel.add(motorcycle);
+                panel.add(cyclist);
+                panel.add(pedestrian);
+                panel.add(route);
+
+                vFrm.setContentPane(panel);
+                vFrm.setLocationRelativeTo(frame);
                 vFrm.setVisible(true);
 
+                car.addActionListener(e1 -> {
+                    try {
+                        String selectrou = (String) selectroute.getSelectedItem();
+                        String selectcol = (String) selectcolor.getSelectedItem();
+                        cCar.createCar(1, conn, selectrou, selectcol);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    String selectrou = (String) selectroute.getSelectedItem();
+                    String selectcol = (String) selectcolor.getSelectedItem();
 
-                car.addActionListener(f -> {
-                    if(mv == null) return;
+                });
 
-                    //	Edges edg = mv.getEdges().get(0);
-                    //	vMngr.spawnVehicle(1, conn, 'C');
-                    //smV.repaint();
+                bus.addActionListener(e1 -> {
+                    try {
+                        String selectrou = (String) selectroute.getSelectedItem();
+                        String selectcol = (String) selectcolor.getSelectedItem();
+                        bBus.createBus(1, conn, selectrou, selectcol);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();;
+                    }
+                    String selectrou = (String) selectroute.getSelectedItem();
+                    String selectcol = (String) selectcolor.getSelectedItem();
+
+                });
+
+                motorcycle.addActionListener(e1 -> {
+                    try {
+                        String selectrou = (String) selectroute.getSelectedItem();
+                        String selectcol = (String) selectcolor.getSelectedItem();
+                        mMotorcycle.createMotorcycle(1, conn, selectrou, selectcol);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();;
+                    }
+                    String selectrou = (String) selectroute.getSelectedItem();
+                    String selectcol = (String) selectcolor.getSelectedItem();
+
+                });
+
+
+                cyclist.addActionListener(e1 -> {
+                    try {
+                        String selectrou = (String) selectroute.getSelectedItem();
+                        String selectcol = (String) selectcolor.getSelectedItem();
+                        cCyclist.createCyclist(1, conn, selectrou, selectcol);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    String selectrou = (String) selectroute.getSelectedItem();
+                    String selectcol = (String) selectcolor.getSelectedItem();
+
+                });
+
+                pedestrian.addActionListener(e1 -> {
+                    try {
+                        String selectrou = (String) selectroute.getSelectedItem();
+                        String selectcol = (String) selectcolor.getSelectedItem();
+                        pPedestrian.createPedestrian(1, conn, selectrou, selectcol);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    String selectrou = (String) selectroute.getSelectedItem();
+                    String selectcol = (String) selectcolor.getSelectedItem();
+
                 });
 
             });
-        }
+
+		
         //Start
 
 
@@ -126,138 +224,302 @@ public class GUI_JavaProjekt
         ctrP.add(vehtype);
 
         //Filter
-        vehtype.addActionListener(e -> {
-            JFrame vFrm = new JFrame("Choose Vehicle Type");
-            vFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            //JToggleButton car = new JToggleButton("Car");
-            //JButton car1 = new JButton("Car");
-            JCheckBox car = new JCheckBox("Car");
-            JCheckBox bus = new JCheckBox("Bus");
-            JCheckBox motorcycle = new JCheckBox("Motorcycle");
-            JCheckBox pedestrian = new JCheckBox("Pedestrian");
-            JCheckBox cyclist = new JCheckBox("Cyclist");
-            JCheckBox allV = new JCheckBox("All Vehicles");
+		JButton vehtype = new JButton("Filter");
+        ctrP.add(vehtype);
 
-            Font sizeFont = new Font("Dialog", Font.PLAIN, 20);
+            vehtype.addActionListener(e -> {
+                JFrame vFrm = new JFrame("Choose Vehicle Type");
+                vFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                JCheckBox car = new JCheckBox("Car");
+                //vMngr.setShowCar(car.isSelected());
+                JCheckBox bus = new JCheckBox("Bus");
+                JCheckBox motorcycle = new JCheckBox("Motorcycle");
+                JCheckBox cyclist = new JCheckBox("Cyclist");
+                JCheckBox pedestrian = new JCheckBox("Pedestrian");
+                JCheckBox allV = new JCheckBox("All Moving Objects");
 
-            car.setFont(sizeFont);
-            bus.setFont(sizeFont);
-            motorcycle.setFont(sizeFont);
-            pedestrian.setFont(sizeFont);
-            cyclist.setFont(sizeFont);
-            allV.setFont(sizeFont);
+                Font sizeFont = new Font("Dialog", Font.PLAIN, 20);
 
-            var distance = BorderFactory.createEmptyBorder(10, 20, 10, 20);
+                car.setFont(sizeFont);
+                bus.setFont(sizeFont);
+                motorcycle.setFont(sizeFont);
+                cyclist.setFont(sizeFont);
+                pedestrian.setFont(sizeFont);
+                allV.setFont(sizeFont);
 
-            car.setBorder(distance);
-            bus.setBorder(distance);
-            motorcycle.setBorder(distance);
-            pedestrian.setBorder(distance);
-            cyclist.setBorder(distance);
-            allV.setBorder(distance);
+                var distance = BorderFactory.createEmptyBorder(10, 20, 10, 20);
 
-
-            car.setSelected(true);
-            bus.setSelected(true);
-            motorcycle.setSelected(true);
-            pedestrian.setSelected(true);
-            cyclist.setSelected(true);
-            allV.setSelected(true);
-
-            JPanel panel = new JPanel();
-            panel.setLayout(new java.awt.GridLayout(6, 1, 10, 10));
-
-            panel.add(car);
-            panel.add(bus);
-            panel.add(motorcycle);
-            panel.add(pedestrian);
-            panel.add(cyclist);
-            panel.add(allV);
-
-            vFrm.setContentPane(panel);
-            vFrm.setSize(500, 300);
-            vFrm.setVisible(true);
+                car.setBorder(distance);
+                bus.setBorder(distance);
+                motorcycle.setBorder(distance);
+                cyclist.setBorder(distance);
+                pedestrian.setBorder(distance);
+                allV.setBorder(distance);
 
 
+                car.setSelected(true);
+                bus.setSelected(true);
+                motorcycle.setSelected(true);
+                cyclist.setSelected(true);
+                pedestrian.setSelected(true);
+                allV.setSelected(true);
 
-            car.addActionListener(e1 -> {
-                if(car.isSelected() == false) {
-                    allV.setSelected(false);
-                }
+                JPanel panel = new JPanel();
+                panel.setLayout(new java.awt.GridLayout(6, 1, 10, 10));
+
+                panel.add(car);
+                panel.add(bus);
+                panel.add(motorcycle);
+                panel.add(cyclist);
+                panel.add(pedestrian);
+                panel.add(allV);
+
+                vFrm.setContentPane(panel);
+                vFrm.setSize(500, 300);
+                vFrm.setVisible(true);
+
+
+                car.addActionListener(e1 -> {
+                    if (!car.isSelected()) {
+                        allV.setSelected(false);
+                    }
+                    try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for(String id : ids) {
+                                if (!id.startsWith("Car")) continue;
+                                if(!car.isSelected()) {
+                                    if(!vehicleColorBackup.containsKey(id)) {
+                                        SumoColor now = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                        vehicleColorBackup.put(id, now);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0,0 )));
+
+                                } else {
+                                    SumoColor now = vehicleColorBackup.get(id);
+                                    if(now != null) {
+                                        conn.do_job_set(Vehicle.setColor(id, now));
+                                    }
+                                }
+                            }
+
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if(mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                bus.addActionListener(e1 -> {
+                    if (!bus.isSelected()) {
+                        allV.setSelected(false);
+                    }
+                    try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for(String id : ids) {
+                                if (!id.startsWith("Bus")) continue;
+                                if(!bus.isSelected()) {
+                                    if(!vehicleColorBackup.containsKey(id)) {
+                                        SumoColor now = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                        vehicleColorBackup.put(id, now);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0,0 )));
+
+                                } else {
+                                    SumoColor now = vehicleColorBackup.get(id);
+                                    if(now != null) {
+                                        conn.do_job_set(Vehicle.setColor(id, now));
+                                    }
+                                }
+                            }
+
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if(mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                motorcycle.addActionListener(e1 -> {
+                    if (!motorcycle.isSelected()) {
+                        allV.setSelected(false);
+                    }
+                    try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for(String id : ids) {
+                                if (!id.startsWith("Motorcycle")) continue;
+                                if(!motorcycle.isSelected()) {
+                                    if(!vehicleColorBackup.containsKey(id)) {
+                                        SumoColor now = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                        vehicleColorBackup.put(id, now);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0,0 )));
+
+                                } else {
+                                    SumoColor now = vehicleColorBackup.get(id);
+                                    if(now != null) {
+                                        conn.do_job_set(Vehicle.setColor(id, now));
+                                    }
+                                }
+                            }
+
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if(mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                cyclist.addActionListener(e1 -> {
+                    if (!cyclist.isSelected()) {
+                        allV.setSelected(false);
+                    }
+                    try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for(String id : ids) {
+                                if (!id.startsWith("Cyclist")) continue;
+                                if(!cyclist.isSelected()) {
+                                    if(!vehicleColorBackup.containsKey(id)) {
+                                        SumoColor now = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                        vehicleColorBackup.put(id, now);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0,0 )));
+
+                                } else {
+                                    SumoColor now = vehicleColorBackup.get(id);
+                                    if(now != null) {
+                                        conn.do_job_set(Vehicle.setColor(id, now));
+                                    }
+                                }
+                            }
+
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if(mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                pedestrian.addActionListener(e1 -> {
+                    if (!pedestrian.isSelected()) {
+                        allV.setSelected(false);
+                    }
+                    try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for(String id : ids) {
+                                if (!id.startsWith("Pedestrians")) continue;
+                                if(!pedestrian.isSelected()) {
+                                    if(!vehicleColorBackup.containsKey(id)) {
+                                        SumoColor now = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                        vehicleColorBackup.put(id, now);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0,0 )));
+
+                                } else {
+                                    SumoColor now = vehicleColorBackup.get(id);
+                                    if(now != null) {
+                                        conn.do_job_set(Vehicle.setColor(id, now));
+                                    }
+                                }
+                            }
+
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if(mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                car.addActionListener(e1 -> {
+                    if ((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
+                        allV.setSelected(true);
+                    }
+                });
+
+
+
+                bus.addActionListener(e1 -> {
+                    if ((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
+                        allV.setSelected(true);
+                    }
+                });
+
+                motorcycle.addActionListener(e1 -> {
+                    if ((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
+                        allV.setSelected(true);
+                    }
+                });
+
+                pedestrian.addActionListener(e1 -> {
+                    if ((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
+                        allV.setSelected(true);
+                    }
+                });
+
+                cyclist.addActionListener(e1 -> {
+                    if ((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
+                        allV.setSelected(true);
+                    }
+                });
+
+                allV.addActionListener(e1 -> {
+                    if (!allV.isSelected()) {
+                        car.setSelected(false);
+                        bus.setSelected(false);
+                        motorcycle.setSelected(false);
+                        pedestrian.setSelected(false);
+                        cyclist.setSelected(false);
+                    } else {
+                        car.setSelected(true);
+                        bus.setSelected(true);
+                        motorcycle.setSelected(true);
+                        pedestrian.setSelected(true);
+                        cyclist.setSelected(true);
+                    }
+                    try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for(String id : ids) {
+                                if (!id.startsWith("Car") && !id.startsWith("Bus") && !id.startsWith("Motorcycle") && !id.startsWith("Cyclist") && !id.startsWith("Pedestrians")) continue;
+                                if(!allV.isSelected()) {
+                                    if(!vehicleColorBackup.containsKey(id)) {
+                                        SumoColor now = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                        vehicleColorBackup.put(id, now);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0,0 )));
+
+                                } else {
+                                    SumoColor now = vehicleColorBackup.get(id);
+                                    if(now != null) {
+                                        conn.do_job_set(Vehicle.setColor(id, now));
+                                    }
+                                }
+                            }
+
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if(mv != null) {
+                        mv.repaint();
+                    }
+                });
+
             });
-
-            bus.addActionListener(e1 -> {
-                if(bus.isSelected() == false) {
-                    allV.setSelected(false);
-                }
-            });
-
-            motorcycle.addActionListener(e1 -> {
-                if(motorcycle.isSelected() == false) {
-                    allV.setSelected(false);
-                }
-            });
-
-            pedestrian.addActionListener(e1 -> {
-                if(pedestrian.isSelected() == false) {
-                    allV.setSelected(false);
-                }
-            });
-
-            cyclist.addActionListener(e1 -> {
-                if(cyclist.isSelected() == false) {
-                    allV.setSelected(false);
-                }
-            });
-
-            car.addActionListener(e1 -> {
-                if((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
-                    allV.setSelected(true);
-                }
-            });
-
-            bus.addActionListener(e1 -> {
-                if((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
-                    allV.setSelected(true);
-                }
-            });
-
-            motorcycle.addActionListener(e1 -> {
-                if((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
-                    allV.setSelected(true);
-                }
-            });
-
-            pedestrian.addActionListener(e1 -> {
-                if((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
-                    allV.setSelected(true);
-                }
-            });
-
-            cyclist.addActionListener(e1 -> {
-                if((car.isSelected() == true) && (bus.isSelected() == true) && (motorcycle.isSelected() == true) && (pedestrian.isSelected() == true) && (cyclist.isSelected() == true)) {
-                    allV.setSelected(true);
-                }
-            });
-
-            allV.addActionListener(e1 -> {
-                if(allV.isSelected() == false) {
-                    car.setSelected(false);
-                    bus.setSelected(false);
-                    motorcycle.setSelected(false);
-                    pedestrian.setSelected(false);
-                    cyclist.setSelected(false);
-                } else if (allV.isSelected() == true) {
-                    car.setSelected(true);
-                    bus.setSelected(true);
-                    motorcycle.setSelected(true);
-                    pedestrian.setSelected(true);
-                    cyclist.setSelected(true);
-                }
-            });
-
-        });
-
         //Stress Test Default
         JButton StressTestDefault = new JButton("Stress Test Default");
         StressTestDefault.setPreferredSize(new Dimension(200,200));
@@ -509,3 +771,4 @@ public class GUI_JavaProjekt
 	}
 	
 }
+
