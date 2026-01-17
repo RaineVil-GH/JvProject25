@@ -521,14 +521,13 @@ public class GUI_JavaProjekt
 
             });
 
-		            JButton vehtype2 = new JButton("Filter 2");
+            JButton vehtype2 = new JButton("Filter 2");
             ctrP.add(vehtype2);
 
             vehtype2.addActionListener(e -> {
                 JFrame vFrm = new JFrame("Choose Color Type");
                 vFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 JCheckBox red = new JCheckBox("Red");
-                //vMngr.setShowCar(car.isSelected());
                 JCheckBox blue = new JCheckBox("Blue");
                 JCheckBox green = new JCheckBox("Green");
                 JCheckBox yellow = new JCheckBox("Yellow");
@@ -576,24 +575,26 @@ public class GUI_JavaProjekt
                 vFrm.setVisible(true);
 
                 red.addActionListener(e1 -> {
-                    if (!red.isSelected()) {
+                    if (red.isSelected() == false) {
                         allC.setSelected(false);
                     } try {
                         synchronized (LOCK.CONN_LOCK) {
                             List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
                             for (String id : ids) {
                                 SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
-                                if (!red.isSelected()) {
+                                if (red.isSelected() == false) {
                                     if (!(colornow.r == (byte)255 && colornow.g == (byte)0 && colornow.b == (byte)0 && colornow.a == (byte)255)) {
                                         continue;
                                     }
-                                    if (!vehicleColorBackup.containsKey(id)) {
+                                    if (vehicleColorBackup.containsKey(id) == false) {
                                         vehicleColorBackup.put(id, colornow);
                                     }
                                     conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
                                 } else {
                                     SumoColor old = vehicleColorBackup.get(id);
-                                    if (old == null) continue;
+                                    if (old == null) {
+                                        continue;
+                                    }
                                     conn.do_job_set(Vehicle.setColor(id, old));
                                     vehicleColorBackup.remove(id);
                                 }
@@ -608,18 +609,18 @@ public class GUI_JavaProjekt
                 });
 
                 blue.addActionListener(e1 -> {
-                    if (!blue.isSelected()) {
+                    if (blue.isSelected() == false) {
                         allC.setSelected(false);
                     } try {
                         synchronized (LOCK.CONN_LOCK) {
                             List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
                             for (String id : ids) {
                                 SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
-                                if (!blue.isSelected()) {
+                                if (blue.isSelected() == false) {
                                     if (!(colornow.r == (byte) 0 && colornow.g == (byte) 0 && colornow.b == (byte) 255 && colornow.a == (byte) 255)) {
                                         continue;
                                 }
-                                    if (!vehicleColorBackup.containsKey(id)) {
+                                    if (vehicleColorBackup.containsKey(id) == false) {
                                         vehicleColorBackup.put(id, colornow);
                                     }
                                     conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
@@ -642,18 +643,18 @@ public class GUI_JavaProjekt
                 });
 
                 green.addActionListener(e1 -> {
-                    if (!green.isSelected()) {
+                    if (green.isSelected() == false) {
                         allC.setSelected(false);
                     } try {
                         synchronized (LOCK.CONN_LOCK) {
                             List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
                             for (String id : ids) {
                                 SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
-                                if (!green.isSelected()) {
+                                if (green.isSelected() == false) {
                                     if (!(colornow.r == (byte)0 && colornow.g == (byte)255 && colornow.b == (byte)0 && colornow.a == (byte)255)) {
                                         continue;
                                     }
-                                    if (!vehicleColorBackup.containsKey(id)) {
+                                    if (vehicleColorBackup.containsKey(id) == false) {
                                         vehicleColorBackup.put(id, colornow);
                                     }
                                     conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
@@ -676,18 +677,18 @@ public class GUI_JavaProjekt
                 });
 
                 yellow.addActionListener(e1 -> {
-                    if (!yellow.isSelected()) {
+                    if (yellow.isSelected() == false) {
                         allC.setSelected(false);
                     } try {
                         synchronized (LOCK.CONN_LOCK) {
                             List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
                             for (String id : ids) {
                                 SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
-                                if (!yellow.isSelected()) {
+                                if (yellow.isSelected() == false) {
                                     if (!(colornow.r == (byte)255 && colornow.g == (byte)255 && colornow.b == (byte)0 && colornow.a == (byte)255)) {
                                         continue;
                                     }
-                                    if (!vehicleColorBackup.containsKey(id)) {
+                                    if (vehicleColorBackup.containsKey(id) == false) {
                                         vehicleColorBackup.put(id, colornow);
                                     }
                                     conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
@@ -710,18 +711,18 @@ public class GUI_JavaProjekt
                 });
 
                 purple.addActionListener(e1 -> {
-                    if (!purple.isSelected()) {
+                    if (purple.isSelected() == false) {
                         allC.setSelected(false);
                     } try {
                         synchronized (LOCK.CONN_LOCK) {
                             List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
                             for (String id : ids) {
                                 SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
-                                if (!purple.isSelected()) {
+                                if (purple.isSelected() == false) {
                                     if (!(colornow.r == (byte)128 && colornow.g == (byte)0 && colornow.b == (byte)128 && colornow.a == (byte)255)) {
                                         continue;
                                     }
-                                    if (!vehicleColorBackup.containsKey(id)) {
+                                    if (vehicleColorBackup.containsKey(id) == false) {
                                         vehicleColorBackup.put(id, colornow);
                                     }
                                     conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
@@ -744,20 +745,20 @@ public class GUI_JavaProjekt
                 });
 
                 allC.addActionListener(e1 -> {
-                    if (!allC.isSelected()) {
+                    if (allC.isSelected() == false) {
                         allC.setSelected(false);
                     } try {
                         synchronized (LOCK.CONN_LOCK) {
                             List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
                             for (String id : ids) {
                                 SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
-                                if (!allC.isSelected()) {
+                                if (allC.isSelected() == false) {
                                     if (!(colornow.r == (byte)128 && colornow.g == (byte)0 && colornow.b == (byte)128 && colornow.a == (byte)255) && !(colornow.r == (byte)255 && colornow.g == (byte)255 && colornow.b == (byte)0 && colornow.a == (byte)255) &&
                                             !(colornow.r == (byte)0 && colornow.g == (byte)255 && colornow.b == (byte)0 && colornow.a == (byte)255) && !(colornow.r == (byte) 0 && colornow.g == (byte) 0 && colornow.b == (byte) 255 && colornow.a == (byte) 255) &&
                                             !(colornow.r == (byte)255 && colornow.g == (byte)0 && colornow.b == (byte)0 && colornow.a == (byte)255)) {
                                         continue;
                                     }
-                                    if (!vehicleColorBackup.containsKey(id)) {
+                                    if (vehicleColorBackup.containsKey(id) == false) {
                                         vehicleColorBackup.put(id, colornow);
                                     }
                                     conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
@@ -1105,5 +1106,6 @@ public class GUI_JavaProjekt
 	}
 	
 }
+
 
 
