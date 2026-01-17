@@ -26,7 +26,7 @@ public class VehicleModul {
 
     }
 
-    public static String[] routes = {"r_0", "r_1", "r_2", "r_3"};
+    public static String[] routes = {"Route_1", "Route_2", "Route_3", "Route_4", "Route_5(P)","Route_6(P)", "Route_7(P)"};
     public static String[] color = {"Red", "Blue", "Green", "Yellow", "Purple"};
 
     public double getSpeed() {
