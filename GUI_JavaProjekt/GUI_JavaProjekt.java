@@ -209,7 +209,7 @@ public class GUI_JavaProjekt
         ctrP.add(vehtype);
 
         //Filter
-		JButton vehtype = new JButton("Filter");
+		JButton vehtype = new JButton("Filter by Type");
         ctrP.add(vehtype);
 
             vehtype.addActionListener(e -> {
@@ -506,7 +506,7 @@ public class GUI_JavaProjekt
 
             });
 
-            JButton vehtype2 = new JButton("Filter 2");
+            JButton vehtype2 = new JButton("Filter by Color");
             ctrP.add(vehtype2);
 
             vehtype2.addActionListener(e -> {
@@ -1091,6 +1091,7 @@ public class GUI_JavaProjekt
 	}
 	
 }
+
 
 
 
