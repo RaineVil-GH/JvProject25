@@ -11,7 +11,7 @@ public class Pedestrian extends VehicleModul {
         super(id);
         this.type = "t_1";
         this.routeID = "r_5";
-        this.speed = 1.0;
+        this.speed = 0.1;
         this.depart = 0;
         this.position = 0.0;
         this.edge = "edge_start_ped";
