@@ -520,6 +520,340 @@ public class GUI_JavaProjekt
                 });
 
             });
+
+		            JButton vehtype2 = new JButton("Filter 2");
+            ctrP.add(vehtype2);
+
+            vehtype2.addActionListener(e -> {
+                JFrame vFrm = new JFrame("Choose Color Type");
+                vFrm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                JCheckBox red = new JCheckBox("Red");
+                //vMngr.setShowCar(car.isSelected());
+                JCheckBox blue = new JCheckBox("Blue");
+                JCheckBox green = new JCheckBox("Green");
+                JCheckBox yellow = new JCheckBox("Yellow");
+                JCheckBox purple = new JCheckBox("Purple");
+                JCheckBox allC = new JCheckBox("All Colors");
+
+                Font sizeFont = new Font("Dialog", Font.PLAIN, 20);
+
+                red.setFont(sizeFont);
+                blue.setFont(sizeFont);
+                green.setFont(sizeFont);
+                yellow.setFont(sizeFont);
+                purple.setFont(sizeFont);
+                allC.setFont(sizeFont);
+
+                var distance = BorderFactory.createEmptyBorder(10, 20, 10, 20);
+
+                red.setBorder(distance);
+                blue.setBorder(distance);
+                green.setBorder(distance);
+                yellow.setBorder(distance);
+                purple.setBorder(distance);
+                allC.setBorder(distance);
+
+
+                red.setSelected(true);
+                blue.setSelected(true);
+                green.setSelected(true);
+                yellow.setSelected(true);
+                purple.setSelected(true);
+                allC.setSelected(true);
+
+                JPanel panel = new JPanel();
+                panel.setLayout(new java.awt.GridLayout(6, 1, 10, 10));
+
+                panel.add(red);
+                panel.add(blue);
+                panel.add(green);
+                panel.add(yellow);
+                panel.add(purple);
+                panel.add(allC);
+
+                vFrm.setContentPane(panel);
+                vFrm.setSize(500, 300);
+                vFrm.setVisible(true);
+
+                red.addActionListener(e1 -> {
+                    if (!red.isSelected()) {
+                        allC.setSelected(false);
+                    } try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for (String id : ids) {
+                                SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                if (!red.isSelected()) {
+                                    if (!(colornow.r == (byte)255 && colornow.g == (byte)0 && colornow.b == (byte)0 && colornow.a == (byte)255)) {
+                                        continue;
+                                    }
+                                    if (!vehicleColorBackup.containsKey(id)) {
+                                        vehicleColorBackup.put(id, colornow);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
+                                } else {
+                                    SumoColor old = vehicleColorBackup.get(id);
+                                    if (old == null) continue;
+                                    conn.do_job_set(Vehicle.setColor(id, old));
+                                    vehicleColorBackup.remove(id);
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if (mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                blue.addActionListener(e1 -> {
+                    if (!blue.isSelected()) {
+                        allC.setSelected(false);
+                    } try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for (String id : ids) {
+                                SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                if (!blue.isSelected()) {
+                                    if (!(colornow.r == (byte) 0 && colornow.g == (byte) 0 && colornow.b == (byte) 255 && colornow.a == (byte) 255)) {
+                                        continue;
+                                }
+                                    if (!vehicleColorBackup.containsKey(id)) {
+                                        vehicleColorBackup.put(id, colornow);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
+                                } else {
+                                    SumoColor old = vehicleColorBackup.get(id);
+                                    if (old == null) {
+                                        continue;
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, old));
+                                    vehicleColorBackup.remove(id);
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if (mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                green.addActionListener(e1 -> {
+                    if (!green.isSelected()) {
+                        allC.setSelected(false);
+                    } try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for (String id : ids) {
+                                SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                if (!green.isSelected()) {
+                                    if (!(colornow.r == (byte)0 && colornow.g == (byte)255 && colornow.b == (byte)0 && colornow.a == (byte)255)) {
+                                        continue;
+                                    }
+                                    if (!vehicleColorBackup.containsKey(id)) {
+                                        vehicleColorBackup.put(id, colornow);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
+                                } else {
+                                    SumoColor old = vehicleColorBackup.get(id);
+                                    if (old == null) {
+                                        continue;
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, old));
+                                    vehicleColorBackup.remove(id);
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if (mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                yellow.addActionListener(e1 -> {
+                    if (!yellow.isSelected()) {
+                        allC.setSelected(false);
+                    } try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for (String id : ids) {
+                                SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                if (!yellow.isSelected()) {
+                                    if (!(colornow.r == (byte)255 && colornow.g == (byte)255 && colornow.b == (byte)0 && colornow.a == (byte)255)) {
+                                        continue;
+                                    }
+                                    if (!vehicleColorBackup.containsKey(id)) {
+                                        vehicleColorBackup.put(id, colornow);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
+                                } else {
+                                    SumoColor old = vehicleColorBackup.get(id);
+                                    if (old == null) {
+                                        continue;
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, old));
+                                    vehicleColorBackup.remove(id);
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if (mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                purple.addActionListener(e1 -> {
+                    if (!purple.isSelected()) {
+                        allC.setSelected(false);
+                    } try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for (String id : ids) {
+                                SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                if (!purple.isSelected()) {
+                                    if (!(colornow.r == (byte)128 && colornow.g == (byte)0 && colornow.b == (byte)128 && colornow.a == (byte)255)) {
+                                        continue;
+                                    }
+                                    if (!vehicleColorBackup.containsKey(id)) {
+                                        vehicleColorBackup.put(id, colornow);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
+                                } else {
+                                    SumoColor old = vehicleColorBackup.get(id);
+                                    if (old == null) {
+                                        continue;
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, old));
+                                    vehicleColorBackup.remove(id);
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if (mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                allC.addActionListener(e1 -> {
+                    if (!allC.isSelected()) {
+                        allC.setSelected(false);
+                    } try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for (String id : ids) {
+                                SumoColor colornow = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                if (!allC.isSelected()) {
+                                    if (!(colornow.r == (byte)128 && colornow.g == (byte)0 && colornow.b == (byte)128 && colornow.a == (byte)255) && !(colornow.r == (byte)255 && colornow.g == (byte)255 && colornow.b == (byte)0 && colornow.a == (byte)255) &&
+                                            !(colornow.r == (byte)0 && colornow.g == (byte)255 && colornow.b == (byte)0 && colornow.a == (byte)255) && !(colornow.r == (byte) 0 && colornow.g == (byte) 0 && colornow.b == (byte) 255 && colornow.a == (byte) 255) &&
+                                            !(colornow.r == (byte)255 && colornow.g == (byte)0 && colornow.b == (byte)0 && colornow.a == (byte)255)) {
+                                        continue;
+                                    }
+                                    if (!vehicleColorBackup.containsKey(id)) {
+                                        vehicleColorBackup.put(id, colornow);
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
+                                } else {
+                                    SumoColor old = vehicleColorBackup.get(id);
+                                    if (old == null) {
+                                        continue;
+                                    }
+                                    conn.do_job_set(Vehicle.setColor(id, old));
+                                    vehicleColorBackup.remove(id);
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if (mv != null) {
+                        mv.repaint();
+                    }
+                });
+
+                red.addActionListener(e1 -> {
+                    if ((red.isSelected() == true) && (blue.isSelected() == true) && (green.isSelected() == true) && (yellow.isSelected() == true) && (purple.isSelected() == true)) {
+                        allC.setSelected(true);
+                    }
+                });
+
+
+                blue.addActionListener(e1 -> {
+                    if ((red.isSelected() == true) && (blue.isSelected() == true) && (green.isSelected() == true) && (yellow.isSelected() == true) && (purple.isSelected() == true)) {
+                        allC.setSelected(true);
+                    }
+                });
+
+                green.addActionListener(e1 -> {
+                    if ((red.isSelected() == true) && (blue.isSelected() == true) && (green.isSelected() == true) && (yellow.isSelected() == true) && (purple.isSelected() == true)) {
+                        allC.setSelected(true);
+                    }
+                });
+
+                yellow.addActionListener(e1 -> {
+                    if ((red.isSelected() == true) && (blue.isSelected() == true) && (green.isSelected() == true) && (yellow.isSelected() == true) && (purple.isSelected() == true)) {
+                        allC.setSelected(true);
+                    }
+                });
+
+                purple.addActionListener(e1 -> {
+                    if ((red.isSelected() == true) && (blue.isSelected() == true) && (green.isSelected() == true) && (yellow.isSelected() == true) && (purple.isSelected() == true)) {
+                        allC.setSelected(true);
+                    }
+                });
+
+                allC.addActionListener(e1 -> {
+                    if (!allC.isSelected()) {
+                        red.setSelected(false);
+                        blue.setSelected(false);
+                        green.setSelected(false);
+                        yellow.setSelected(false);
+                        purple.setSelected(false);
+                    } else {
+                        red.setSelected(true);
+                        blue.setSelected(true);
+                        green.setSelected(true);
+                        yellow.setSelected(true);
+                        purple.setSelected(true);
+                    }
+
+                    try {
+                        synchronized (LOCK.CONN_LOCK) {
+                            List<String> ids = (List<String>) conn.do_job_get(Vehicle.getIDList());
+                            for (String id : ids) {
+                                if(!allC.isSelected()) {
+                                        if (!vehicleColorBackup.containsKey(id)) {
+                                            SumoColor now = (SumoColor) conn.do_job_get(Vehicle.getColor(id));
+                                            vehicleColorBackup.put(id, now);
+                                        }
+                                        conn.do_job_set(Vehicle.setColor(id, new SumoColor(0, 0, 0, 0)));
+
+                                    } else {
+                                    SumoColor old = vehicleColorBackup.get(id);
+                                    if (old != null) {
+                                        conn.do_job_set(Vehicle.setColor(id, old));
+                                    }
+                                }
+                            }
+
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    if (mv != null) {
+                        mv.repaint();
+                    }
+                });
+            });
+		
         //Stress Test Default
         JButton StressTestDefault = new JButton("Stress Test Default");
         StressTestDefault.setPreferredSize(new Dimension(200,200));
@@ -771,4 +1105,5 @@ public class GUI_JavaProjekt
 	}
 	
 }
+
 
