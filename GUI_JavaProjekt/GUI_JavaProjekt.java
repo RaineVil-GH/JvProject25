@@ -131,9 +131,6 @@ public class GUI_JavaProjekt
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                    String selectrou = (String) selectroute.getSelectedItem();
-                    String selectcol = (String) selectcolor.getSelectedItem();
-
                 });
 
                 bus.addActionListener(e1 -> {
@@ -144,9 +141,6 @@ public class GUI_JavaProjekt
                     } catch (Exception ex) {
                         ex.printStackTrace();;
                     }
-                    String selectrou = (String) selectroute.getSelectedItem();
-                    String selectcol = (String) selectcolor.getSelectedItem();
-
                 });
 
                 motorcycle.addActionListener(e1 -> {
@@ -157,9 +151,6 @@ public class GUI_JavaProjekt
                     } catch (Exception ex) {
                         ex.printStackTrace();;
                     }
-                    String selectrou = (String) selectroute.getSelectedItem();
-                    String selectcol = (String) selectcolor.getSelectedItem();
-
                 });
 
 
@@ -171,9 +162,6 @@ public class GUI_JavaProjekt
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                    String selectrou = (String) selectroute.getSelectedItem();
-                    String selectcol = (String) selectcolor.getSelectedItem();
-
                 });
 
                 pedestrian.addActionListener(e1 -> {
@@ -184,9 +172,6 @@ public class GUI_JavaProjekt
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                    String selectrou = (String) selectroute.getSelectedItem();
-                    String selectcol = (String) selectcolor.getSelectedItem();
-
                 });
 
             });
@@ -1106,6 +1091,7 @@ public class GUI_JavaProjekt
 	}
 	
 }
+
 
 
 
